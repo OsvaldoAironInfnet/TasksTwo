@@ -16,3 +16,4 @@ rootProject.name = "FirstProjectInfnet"
 include ':app'
 include ':commom'
 include ':firebaseauth'
+include ':storage'

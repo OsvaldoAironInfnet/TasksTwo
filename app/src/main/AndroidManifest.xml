@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:name=".MyApplication"
@@ -15,10 +19,14 @@
         android:theme="@style/Theme.FirstProjectInfnet"
         tools:targetApi="31">
         <activity
-            android:name=".register.presentation.RegisterActivity"
+            android:name=".profile.presentation.ui.profilepicture.ProfilePictureActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".register.presentation.RegisterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".home.presentation.HomeActivity"
             android:exported="true"

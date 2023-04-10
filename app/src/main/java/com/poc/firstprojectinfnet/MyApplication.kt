@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseApp
 import com.poc.commom.base.di.CommonModule
 import com.poc.firstprojectinfnet.home.di.HomeModule
 import com.poc.firstprojectinfnet.login.di.LoginModule
+import com.poc.firstprojectinfnet.profile.di.ProfilePictureModule
 import com.poc.firstprojectinfnet.register.di.RegisterModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -32,7 +33,8 @@ class MyApplication : Application() {
         CommonModule.commomModule,
         LoginModule.loginModule,
         RegisterModule.registerModule,
-        HomeModule.homeModule
+        HomeModule.homeModule,
+        ProfilePictureModule.profilePictureDep
     )
 
     private fun globalSharedPreference() = module {

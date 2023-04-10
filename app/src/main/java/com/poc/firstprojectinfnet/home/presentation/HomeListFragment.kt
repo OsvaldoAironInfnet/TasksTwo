@@ -1,27 +1,21 @@
 package com.poc.firstprojectinfnet.home.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.poc.firstprojectinfnet.R
 import com.poc.firstprojectinfnet.databinding.FragmentHomeListBinding
 import com.poc.firstprojectinfnet.home.data.Task
 import com.poc.firstprojectinfnet.home.presentation.list.ItemTaskAdapter
 import com.poc.firstprojectinfnet.home.presentation.list.OnRecyclerViewDataSetChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-
 
 class HomeListFragment : Fragment() {
 
@@ -41,6 +35,9 @@ class HomeListFragment : Fragment() {
         _binding = FragmentHomeListBinding.inflate(inflater, container, false)
 
         populateView()
+
+        homeViewModel.listAllTasks()
+
 
         return _binding?.root
 
@@ -66,7 +63,7 @@ class HomeListFragment : Fragment() {
 
             recyclerView.adapter = itemTaskAdapter
             uiScope.launch {
-                homeViewModel.viewState.collect { stateTask ->
+                homeViewModel.viewState.observe(viewLifecycleOwner) { stateTask ->
                     if (stateTask.listFavorite) {
                         itemTaskAdapter.clear()
                     }

@@ -29,6 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
@@ -39,67 +40,33 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_logo_login">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <FrameLayout
                     android:id="@+id/edt_username"
-                    style="@style/NotepadEditText"
-                    android:hint="@string/username"
-                    app:boxBackgroundColor="@color/white"
-                    app:startIconDrawable="@drawable/baseline_account_circle_24"
-                    app:startIconTint="#000000">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text|textEmailAddress" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
+                <FrameLayout
                     android:id="@+id/edt_password"
-                    style="@style/NotepadEditText"
                     android:layout_below="@id/edt_username"
-                    android:hint="@string/password"
-                    app:boxBackgroundColor="@color/white"
-                    app:endIconMode="password_toggle"
-                    app:startIconDrawable="@drawable/baseline_lock_24"
-                    app:startIconTint="#000000">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
 
-
-                <com.google.android.material.textfield.TextInputLayout
+                <FrameLayout
                     android:id="@+id/edt_password_confirm"
-                    style="@style/NotepadEditText"
                     android:layout_below="@id/edt_password"
-                    android:hint="@string/cpassword"
-                    app:boxBackgroundColor="@color/white"
-                    app:endIconMode="password_toggle"
-                    app:startIconDrawable="@drawable/baseline_lock_24"
-                    app:startIconTint="#000000">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
+                <FrameLayout
                     android:id="@+id/btn_login"
-                    style="@style/NotepadButton"
                     android:layout_below="@+id/edt_password_confirm"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/gradient_notepad_button"
-                    android:textColor="@color/white"
-                    android:text="@string/register" />
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    />
 
             </RelativeLayout>
 

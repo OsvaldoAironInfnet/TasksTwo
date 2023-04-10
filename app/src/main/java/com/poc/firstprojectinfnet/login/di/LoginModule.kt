@@ -7,7 +7,7 @@ object LoginModule {
 
     val loginModule = module {
         factory<LoginViewModel> {
-            LoginViewModel(get())
+            LoginViewModel(get(),get())
         }
     }
 }

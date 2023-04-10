@@ -4,11 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.poc.commom.base.auth.GoogleLoginSingInDTO
 
 import com.poc.commom.base.views.BaseActivity
 import com.poc.firstprojectinfnet.R
 import com.poc.firstprojectinfnet.home.presentation.HomeActivity
+import com.poc.firstprojectinfnet.login.navigation.RedirectLoginFlowEnum
+import com.poc.firstprojectinfnet.profile.presentation.ui.profilepicture.ProfilePictureFragment
 import org.koin.android.ext.android.inject
 
 class LoginActivity : BaseActivity(), LoginContract.View {
@@ -45,8 +48,12 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     }
 
     override fun onBackPressed() {
-        if(supportFragmentManager.backStackEntryCount == 0) {
-            Log.w("STACK", "STACK NAVIGATION - don't call backPressed")
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            when (navHostFragment?.findNavController()?.currentDestination?.displayName) {
+                RedirectLoginFlowEnum.FORGOT_PASSWORD_FRAGMENT.navigationScreen.displayName -> {
+                    navigationScreen?.navigate(RedirectLoginFlowEnum.LOGIN_FRAGMENT.navigationScreen)
+                }
+            }
         } else {
             super.onBackPressed()
         }

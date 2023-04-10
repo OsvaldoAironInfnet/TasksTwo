@@ -9,4 +9,18 @@
         android:id="@+id/homeListFragment"
         android:name="com.poc.firstprojectinfnet.home.presentation.HomeListFragment"
         tools:layout="@layout/fragment_home_list" />
+
+    <fragment
+        android:id="@+id/nav_profile_picture"
+        android:name="com.poc.firstprojectinfnet.profile.presentation.ui.profilepicture.ProfilePictureFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_profile_picture" />
+
+    <fragment
+        android:id="@+id/nav_fav_tasks"
+        android:name="com.poc.firstprojectinfnet.profile.presentation.ui.gallery.GalleryFragment"
+        android:label="@string/menu_fav_tasks"
+        tools:layout="@layout/fragment_gallery" />
+
+
 </navigation>

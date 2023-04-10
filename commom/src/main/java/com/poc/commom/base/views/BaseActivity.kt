@@ -10,7 +10,7 @@ import com.poc.commom.base.views.navigation.OnNavigationScreenImpl
 
 open class BaseActivity : AppCompatActivity() {
 
-    private var navHostFragment: NavHostFragment? = null
+    var navHostFragment: NavHostFragment? = null
     var navigationScreen: OnNavigationScreen? = null
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

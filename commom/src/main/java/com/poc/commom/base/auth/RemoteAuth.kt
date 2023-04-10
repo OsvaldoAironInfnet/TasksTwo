@@ -22,7 +22,7 @@ class RemoteAuth(
         onFailure: () -> Unit
     ) {
         googleLoginProvider.getDataIntentSignIn(data, onSuccess = {
-            onSuccess.invoke(GoogleLoginSingInDTO(it.email, it.id,"google"))
+            onSuccess.invoke(GoogleLoginSingInDTO(it.email, it.id, "google"))
         }, onFailure)
     }
 
@@ -58,5 +58,9 @@ class RemoteAuth(
         onFailure: (String) -> Unit
     ) {
         firebaseCredentialsProvider.onLoginUser(email, password, onSuccess, onFailure)
+    }
+
+    fun onResetPassword(email: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        firebaseCredentialsProvider.onSendEmailResetPassword(email, onSuccess, onFailure)
     }
 }

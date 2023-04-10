@@ -98,6 +98,20 @@ class NetworkProviderAuthenticator(private val applicationContext: Context) :
         }
     }
 
+    override fun onSendEmailResetPassword(
+        email: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener {
+            if(it.isSuccessful) {
+                onSuccess.invoke()
+            } else {
+                onFailure.invoke("Falha ao resetar a senha, tente novamente!")
+            }
+        }
+    }
+
     private fun sendEmailVerification(onResult: (String) -> Unit) {
         val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
 

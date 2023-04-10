@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/commom" />
             <option value="$PROJECT_DIR$/firebaseauth" />
+            <option value="$PROJECT_DIR$/storage" />
           </set>
         </option>
       </GradleProjectSettings>

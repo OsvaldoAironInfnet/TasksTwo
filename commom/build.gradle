@@ -44,7 +44,15 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     implementation project(':firebaseauth')
+    implementation project(':storage')
+
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     //Dependency Injection
     implementation "io.insert-koin:koin-android:3.3.3"
+
+
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

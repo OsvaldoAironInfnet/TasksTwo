@@ -5,10 +5,12 @@ import android.os.Handler
 import androidx.lifecycle.ViewModel
 import com.poc.commom.base.auth.GoogleLoginSingInDTO
 import com.poc.commom.base.auth.RemoteAuth
+import com.poc.commom.base.tracker.TrackerLogEvent
 import com.poc.commom.base.views.BaseActivity
+import com.poc.commom.base.views.BaseViewModel
 
-class LoginViewModel(private val remoteAuth: RemoteAuth) :
-    ViewModel() {
+class LoginViewModel(private val remoteAuth: RemoteAuth, private val tracker: TrackerLogEvent) :
+    BaseViewModel<LoginState, LoginAction>() {
 
     var loginView: LoginContract.View? = null
     var handler: Handler? = null
@@ -53,16 +55,36 @@ class LoginViewModel(private val remoteAuth: RemoteAuth) :
         remoteAuth.onLoginFirebaseCredentials(email, password, onSuccess = {
             loginView?.showMessage("Login realizado com sucesso!")
             Handler().postDelayed({
-                redirectToHomeApp(GoogleLoginSingInDTO(null, it, "firebase"))
+                redirectToHomeApp(GoogleLoginSingInDTO(email, it, "firebase"))
             }, 1000)
         }, onFailure = {
             loginView?.showMessage(it)
         })
     }
 
+    private fun trackLoginSucessful() {
+        tracker.trackEventClick("login_ok", "LOGIN", "Login realizado com sucesso")
+    }
 
     private fun redirectToHomeApp(data: GoogleLoginSingInDTO) {
         loginView?.redirectToHome(data)
+        trackLoginSucessful()
+    }
+
+    fun redirectToForgotPassword() {
+        action.value = LoginAction.RedirectToForgotPassword
+    }
+
+    fun onResetPassword(email: String) {
+        remoteAuth.onResetPassword(email, onSuccess = {
+            action.value = LoginAction.GenericToastError.apply {
+                message = "Verifique sua caixa de e-mails"
+            }
+        }, onFailure = {
+            action.value = LoginAction.GenericToastError.apply {
+                message = "Não foi possivel enviar um e-mail de redefinição, tente novamente!"
+            }
+        })
     }
 
     companion object {
