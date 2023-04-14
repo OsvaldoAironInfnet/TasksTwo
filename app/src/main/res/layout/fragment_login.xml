@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_splash">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".login.presentation.LoginFragment">
+
+
+            <ImageView
+                android:id="@+id/image_logo_login"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/image_logo_login"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/notepadlogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginRight="36dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_logo_login">
+
+                <FrameLayout
+                    android:id="@+id/edt_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <FrameLayout
+                    android:id="@+id/passwordInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edt_username" />
+
+                <FrameLayout
+                    android:id="@+id/btn_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/passwordInput" />
+
+                <TextView
+                    android:id="@+id/text_register_here"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_login"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/n_o_tem_conta_cadastre_se_aqui"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/text_forgot_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_register_here"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_forgot_password"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="300dp"
+                        android:layout_height="1dp"
+                        android:background="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/logingoogle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linear1"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/googlelogo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/entrar_com_o_google"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>

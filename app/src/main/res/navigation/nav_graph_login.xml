@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment"
+    >
+
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.poc.firstprojectinfnet.login.presentation.SplashScreenFragment"
+        android:label="@string/splash_fragment"
+        tools:layout="@layout/fragment_splash_screen"
+        >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.poc.firstprojectinfnet.login.presentation.LoginFragment"
+        android:label="@string/login_fragment"
+        tools:layout="@layout/fragment_login"
+        >
+        <action
+            android:id="@+id/action_logintFragment_to_forgotpassword"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.poc.firstprojectinfnet.login.presentation.ForgotPasswordFragment"
+        android:label="@string/forgot_password_fragment"
+        tools:layout="@layout/fragment_forgot_password"
+        />
+</navigation>

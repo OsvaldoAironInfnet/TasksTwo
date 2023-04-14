@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.presentation.HomeTaskDetailFragment">
+
+
+    <RelativeLayout
+        android:background="@drawable/gradient_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="24dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="4dp">
+
+
+        <TextView
+            android:id="@+id/txt_date_expire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="36dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Data de Expiração: 12/04/2023 - 08:00" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageTask"
+                android:layout_width="148dp"
+                android:layout_height="148dp"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/notepadlogo"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="170dp"
+                android:layout_marginStart="14dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toRightOf="@id/imageTask"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Titulo de uma Tarefa" />
+
+            <ImageView
+                android:id="@+id/imageFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="170dp"
+                android:src="@drawable/baseline_star_24"
+                app:layout_constraintLeft_toRightOf="@id/txt_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:padding="16dp"
+                android:id="@+id/txt_description"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/white"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageTask"
+                tools:text="Descrição de uma tarefa de uma Tarefa hahah ahahahaahahahahahahahhdausdhasudhuashausdhaudhuasdhuasdhausdhaudh" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</FrameLayout>

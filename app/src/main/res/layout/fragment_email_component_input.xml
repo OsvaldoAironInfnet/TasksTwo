@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".components.EmailComponentInputFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edt_username"
+        style="@style/NotepadEditText"
+        android:hint="@string/username"
+        app:boxBackgroundColor="@color/white"
+        app:startIconDrawable="@drawable/baseline_account_circle_24"
+        app:startIconTint="#000000">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text|textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</FrameLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/homeListFragment">
+    <fragment
+        android:id="@+id/homeListFragment"
+        android:name="com.poc.firstprojectinfnet.home.presentation.HomeListFragment"
+        tools:layout="@layout/fragment_home_list" >
+        <action
+            android:id="@+id/startHomeDetailFragment"
+            app:destination="@id/homeDetailFragment"
+            >
+            <argument
+                android:name="taskArg"
+                app:argType="com.poc.firstprojectinfnet.home.data.Task"
+                app:nullable="true" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile_picture"
+        android:name="com.poc.firstprojectinfnet.profile.presentation.ui.profilepicture.ProfilePictureFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_profile_picture" />
+
+    <fragment
+        android:id="@+id/nav_fav_tasks"
+        android:name="com.poc.firstprojectinfnet.profile.presentation.ui.gallery.ProfileTaskFavoriteFragment"
+        android:label="@string/menu_fav_tasks"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/homeAddFragment"
+        android:name="com.poc.firstprojectinfnet.home.presentation.HomeAddTaskFragment"
+        android:label="@string/menu_add_tasks"
+        tools:layout="@layout/fragment_home_add_task" />
+
+    <fragment
+        android:id="@+id/homeDetailFragment"
+        android:name="com.poc.firstprojectinfnet.home.presentation.HomeTaskDetailFragment"
+        android:label="@string/menu_detail_task"
+        tools:layout="@layout/fragment_home_task_detail">
+    </fragment>
+
+</navigation>
