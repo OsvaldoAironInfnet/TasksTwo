@@ -9,8 +9,8 @@ class HomeSaveTaskUseCase(private val homeRepository: HomeRepository) {
         homeRepository.saveARemoteTask(data)
     }
 
-    fun saveLocalTask(data: Task) {
-
+    fun saveLocalTask(data: List<Task>) {
+        homeRepository.saveALocalTask(data, data.first().id)
     }
 
     fun saveUserPrefs(data: GoogleLoginSingInDTO) {

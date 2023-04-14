@@ -9,7 +9,9 @@ import com.poc.commom.base.auth.GoogleLoginSingInDTO
 import com.poc.commom.base.safeLet
 import com.poc.commom.base.views.BaseViewModel
 import com.poc.firstprojectinfnet.home.data.Task
+import com.poc.firstprojectinfnet.home.data.usecase.HomeRecoveryAllTasksUseCase
 import com.poc.firstprojectinfnet.profile.data.model.ProfilePicture
+import com.poc.firstprojectinfnet.profile.data.model.TasksProfile
 import com.poc.firstprojectinfnet.profile.data.usecase.ProfilePictureGetDataUserUseCase
 import com.poc.firstprojectinfnet.profile.data.usecase.ProfilePictureGetSettingsUseCase
 import com.poc.firstprojectinfnet.profile.data.usecase.ProfilePictureSaveUseCase
@@ -17,6 +19,7 @@ import com.poc.firstprojectinfnet.profile.data.usecase.ProfilePictureSaveUseCase
 class ProfilePictureViewModel(
     private val profilePictureSaveUseCase: ProfilePictureSaveUseCase,
     private val profilePictureGetDataUserUseCase: ProfilePictureGetDataUserUseCase,
+    private val homeRecoveryAllTasksUseCase: HomeRecoveryAllTasksUseCase,
     private val profilePictureSettings: ProfilePictureGetSettingsUseCase
 ) :
     BaseViewModel<ProfilePictureState, ProfilePictureAction>() {
@@ -24,6 +27,29 @@ class ProfilePictureViewModel(
     var imageBitMap: Bitmap? = null
     var imageUri: Uri? = null
 
+    fun recoveryTasks() {
+        homeRecoveryAllTasksUseCase.recoveryAllRemoteTasks(onRecoveryAllData = {
+            var favTasks = 0
+            var allTasks = 0
+            it.forEach { task ->
+                if (task.favorite) {
+                    favTasks += 1
+                }
+                allTasks += 1
+            }
+
+            state.value = ProfilePictureState(
+                tasksProfile = TasksProfile(
+                    favoriteTasks = favTasks,
+                    allTasks = allTasks
+                )
+            )
+        }, onFailure = { _ ->
+            action.value = ProfilePictureAction.GenericToastError.apply {
+                message = "Não foi possivel obter as tarefas!"
+            }
+        })
+    }
 
     fun recoveryProfileImage() {
         profilePictureGetDataUserUseCase.getDataUser(onSuccess = {

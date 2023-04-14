@@ -8,7 +8,7 @@ class OnNavigationScreenImpl(private val navController: NavController?) : OnNavi
 
     override fun navigate(navData: NavigationScreen) {
         Log.d("OnNavigationScreen", "Navigate to: " + navData.name)
-        navController?.navigate(navData.id)
+        navController?.navigate(navData.id, navData.bundle)
     }
 
     override fun navigate(navData: NavigationScreen, args: Bundle) {

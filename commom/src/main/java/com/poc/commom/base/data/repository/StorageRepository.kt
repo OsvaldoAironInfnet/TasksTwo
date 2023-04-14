@@ -4,11 +4,13 @@ import android.net.Uri
 import com.poc.storage.FirebaseRealtimeStoragePhotoImpl
 import com.poc.storage.StorageDAO as FirebaseStorageDao
 import com.poc.storage.StorageDAO as FirebaseRealTimeProfile
-import com.poc.storage.profile.TaskProfileUser
+import com.poc.storage.StorageDAO as SharedPreferenceStorage
+import com.poc.storage.StorageDAO as SharedPreferenceTaskStorage
 
 class StorageRepository<T : Any>(
     private val firebaseRealtimeStorage: FirebaseStorageDao<T>,
-    private val sharedPreferenceStorage: com.poc.storage.StorageDAO<T>,
+    private val sharedPreferenceStorage: SharedPreferenceStorage<T>,
+    private val sharedPreferenceTaskStorage: SharedPreferenceTaskStorage<T>,
     private val firebaseStoragePhoto: FirebaseRealtimeStoragePhotoImpl<Any>,
     private val firebaseRealtimeProfile: FirebaseRealTimeProfile<T>
 ) {
@@ -28,6 +30,14 @@ class StorageRepository<T : Any>(
         firebaseRealtimeStorage.saveData(data = data)
     }
 
+    fun saveDataTaskLocal(data: List<T>, userId: String?) {
+        sharedPreferenceTaskStorage.saveListData(data,userId)
+    }
+
+    fun deleteTask(data: T, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        firebaseRealtimeStorage.removeData(data,onSuccess, onFailure)
+    }
+
     fun recoveryDataRealtimeDatabase(
         onRecovery: (Map<String, Any>) -> Unit,
         onFailure: (String) -> Unit
@@ -40,7 +50,6 @@ class StorageRepository<T : Any>(
         onFailure: (String) -> Unit
     ) =
         firebaseRealtimeStorage.recoveryAllData(onRecovery, onFailure)
-
 
     fun saveStoragePhoto(data: T) {
         firebaseStoragePhoto.saveData(data)

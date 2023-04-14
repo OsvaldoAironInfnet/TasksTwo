@@ -28,7 +28,7 @@ object ProfilePictureModule {
         }
 
         viewModel {
-            ProfilePictureViewModel(get(), get(), get())
+            ProfilePictureViewModel(get(), get(), get(),get())
         }
     }
 }

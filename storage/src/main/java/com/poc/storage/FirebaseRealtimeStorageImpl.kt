@@ -18,8 +18,8 @@ class FirebaseRealtimeStorageImpl<T : Any>(override var referenceDatabaseName: S
 
     private val refDatabase = realtimeDatabase.reference.child(referenceDatabaseName)
 
-    override fun saveData(data: T) {
-        if(referenceDatabaseName == "profile") {
+    override fun saveData(data: T, userId: String?) {
+        if (referenceDatabaseName == "profile") {
             val hashMap: MutableMap<String, T> = java.util.HashMap()
             val idField = data::class.java.getDeclaredField("id")
             idField.isAccessible = true
@@ -28,18 +28,38 @@ class FirebaseRealtimeStorageImpl<T : Any>(override var referenceDatabaseName: S
             refDatabase.child(hashMap.keys.first()).setValue(data)
         } else {
             val hashMap: MutableMap<String, T> = java.util.HashMap()
-            hashMap[UUID.randomUUID().toString()] = data
+            val validationId = data::class.java.getDeclaredField("validationId")
+            validationId.isAccessible = true
+            val idValidation = validationId.get(data) as String
+            hashMap[idValidation] = data
             refDatabase.child(hashMap.keys.first()).setValue(data)
         }
     }
 
-    override fun getOneData(onRecovery: (Map<String, Any>) -> Unit, onFailure: (String) -> Unit,userId: String?) {
+    override fun saveListData(data: List<T>, userId: String?) {}
+    override fun removeData(data: T?, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        val validationId = data?.let { data::class.java.getDeclaredField("validationId") }
+        validationId?.isAccessible = true
+        val idValidation = validationId?.get(data) as String
+        refDatabase.child(idValidation).removeValue().addOnSuccessListener {
+            onSuccess.invoke()
+        }.addOnFailureListener {
+            onFailure.invoke()
+        }
+    }
+
+    override fun getOneData(
+        onRecovery: (Map<String, Any>) -> Unit,
+        onFailure: (String) -> Unit,
+        userId: String?
+    ) {
         refDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val genericTypeIndicator: GenericTypeIndicator<Map<String, Any>> =
                     object : GenericTypeIndicator<Map<String, Any>>() {}
-                snapshot.getValue(genericTypeIndicator)?.let { onRecovery.invoke(it)}
+                snapshot.getValue(genericTypeIndicator)?.let { onRecovery.invoke(it) }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 onFailure.invoke("Error to recovery data")
             }
@@ -47,12 +67,15 @@ class FirebaseRealtimeStorageImpl<T : Any>(override var referenceDatabaseName: S
         })
     }
 
-    override fun recoveryAllData(onRecovery: (Map<String, Any>) -> Unit, onFailure: (String) -> Unit) {
+    override fun recoveryAllData(
+        onRecovery: (Map<String, Any>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
         refDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val genericTypeIndicator: GenericTypeIndicator<Map<String, Any>> =
                     object : GenericTypeIndicator<Map<String, Any>>() {}
-                snapshot.getValue(genericTypeIndicator)?.let { onRecovery.invoke(it)}
+                snapshot.getValue(genericTypeIndicator)?.let { onRecovery.invoke(it) }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -61,4 +84,6 @@ class FirebaseRealtimeStorageImpl<T : Any>(override var referenceDatabaseName: S
 
         })
     }
+
+    override fun clearAllData(onSuccess: () -> Unit, onFailure: () -> Unit) {}
 }

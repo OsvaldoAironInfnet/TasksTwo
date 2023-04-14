@@ -10,6 +10,7 @@ import com.poc.firebaseauth.NetworkProviderAuthenticator
 import com.poc.storage.FirebaseRealtimeStorageImpl
 import com.poc.storage.FirebaseRealtimeStoragePhotoImpl
 import com.poc.storage.SharedPreferenceStorageImpl
+import com.poc.storage.SharedPreferenceTaskStorageImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -28,6 +29,10 @@ object CommonModule {
                 firebaseRealtimeStorage = FirebaseRealtimeStorageImpl("tasks"),
                 sharedPreferenceStorage = SharedPreferenceStorageImpl(
                     "tasks_prefs",
+                    androidContext()
+                ),
+                sharedPreferenceTaskStorage = SharedPreferenceTaskStorageImpl(
+                    "tasks_prefs_tasks",
                     androidContext()
                 ),
                 firebaseStoragePhoto = FirebaseRealtimeStoragePhotoImpl("tasks_profile_photo"),

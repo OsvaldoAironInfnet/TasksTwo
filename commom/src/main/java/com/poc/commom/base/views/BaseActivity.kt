@@ -21,7 +21,4 @@ open class BaseActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(navHostFragmentLayoutId) as NavHostFragment
         navigationScreen = OnNavigationScreenImpl(navController = navHostFragment?.navController)
     }
-
-    fun validateUsername(string: String) =
-        string.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(string).matches()
 }

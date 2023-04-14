@@ -12,11 +12,14 @@ class SharedPreferenceStorageImpl<T>(override var referenceDatabaseName: String,
         )
     }
 
-    override fun saveData(data: T) {
+    override fun saveData(data: T, userId: String?) {
         sharedPreferences.edit().apply {
             putString("userData", data.toString())
         }.apply()
     }
+
+    override fun saveListData(data: List<T>, userId: String?) {}
+    override fun removeData(data: T?, onSuccess: () -> Unit, onFailure: () -> Unit) {}
 
     override fun getOneData(onRecovery: (Map<String, Any>) -> Unit, onFailure: (String) -> Unit,userId: String?) {
         val recoveryDataUser = sharedPreferences.getString("userData", "")
@@ -35,6 +38,8 @@ class SharedPreferenceStorageImpl<T>(override var referenceDatabaseName: String,
         onRecovery: (Map<String, Any>) -> Unit,
         onFailure: (String) -> Unit
     ) {}
+
+    override fun clearAllData(onSuccess: () -> Unit, onFailure: () -> Unit) {}
 
 
 }

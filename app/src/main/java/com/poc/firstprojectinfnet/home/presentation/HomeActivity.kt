@@ -1,6 +1,7 @@
 package com.poc.firstprojectinfnet.home.presentation
 
 
+import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.transition.Fade
@@ -8,6 +9,7 @@ import android.transition.Slide
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.Gravity
+import android.view.Menu
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
@@ -28,6 +30,8 @@ import com.poc.commom.base.views.BaseActivity
 import com.poc.firstprojectinfnet.R
 import com.poc.firstprojectinfnet.databinding.ActivityHomeBinding
 import com.poc.firstprojectinfnet.home.navigation.RedirectHomeFlowEnum
+import com.poc.firstprojectinfnet.home.presentation.weather.WeatherFragment
+import com.poc.firstprojectinfnet.login.navigation.RedirectLoginFlowEnum
 import com.poc.firstprojectinfnet.profile.data.model.ProfilePicture
 import com.poc.firstprojectinfnet.profile.presentation.ui.profilepicture.ProfilePictureFragment
 import de.hdodenhof.circleimageview.CircleImageView
@@ -57,15 +61,18 @@ class HomeActivity : BaseActivity(), HomeContract.View {
 
         setupHomeViewModel()
 
-        setupDescriptionDataHome()
-
         onClickBtnProfileAction()
 
         observeAction()
         observeState()
 
-        setupProfile()
+        setupDescriptionDataHome()
 
+        onClickBtnFabAction()
+
+        setupProfile()
+        setupWeather()
+        logoutApp()
     }
 
     override fun onResume() {
@@ -73,9 +80,34 @@ class HomeActivity : BaseActivity(), HomeContract.View {
         setupProfile()
     }
 
+    private fun logoutApp() {
+        _binding?.btnLogout?.setOnClickListener {
+            AlertDialog.Builder(this@HomeActivity).setTitle(
+                "Sair do App"
+            ).setMessage("Fazer logout do app?").setPositiveButton(
+                "Sim"
+            ) { _, _ ->
+                homeViewModel.onLogoutApp()
+            }.setNegativeButton("Não") { _, _ -> }.show()
+        }
+    }
+
+    private fun setupDescriptionDataHome() {
+        val calendar = Calendar.getInstance()
+
+        val dayOfWeek = dayOfWeek(calendar)
+        val nameOfMonth = nameOfMonth(calendar)
+
+        _binding?.descriptionHome?.text = "${dayOfWeek?.capitalize()},${nameOfMonth?.capitalize()}"
+    }
+
+    private fun setupWeather() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.weather_view, WeatherFragment(), "WeatherFragment").commit()
+    }
+
     private fun observeState() = with(homeViewModel) {
-        state.observe(this@HomeActivity) {
-            homeState ->
+        state.observe(this@HomeActivity) { homeState ->
             setupProfileSettings(homeState.profilePictureState)
         }
     }
@@ -87,6 +119,12 @@ class HomeActivity : BaseActivity(), HomeContract.View {
                     setupProfileImageNav(HomeAction.SetupProfileNavigationImage.image)
                     trackLoadProfileSettingsNavigation()
                 }
+                HomeAction.RedirectToAddTaskPage -> {
+                    navigationScreen?.navigate(RedirectHomeFlowEnum.HOME_ADD_FRAGMENT.navigationScreen)
+                }
+                HomeAction.OnLogoutApp -> {
+                    finishAffinity()
+                }
             }
         }
     }
@@ -95,12 +133,13 @@ class HomeActivity : BaseActivity(), HomeContract.View {
         profilePicture?.let {
             val headerView = navigationView?.getHeaderView(0)
             val textName = headerView?.findViewById<TextView>(R.id.name)
-            textName?.text= it.name
+            textName?.text = it.name
 
             val textEmail = headerView?.findViewById<TextView>(R.id.email)
-            textEmail?.text= it.email
+            textEmail?.text = it.email
         }
     }
+
     private fun setupProfileImageNav(image: Uri?) {
         val headerView = navigationView?.getHeaderView(0)
         val imageView = headerView?.findViewById<CircleImageView>(R.id.imageView)
@@ -132,49 +171,9 @@ class HomeActivity : BaseActivity(), HomeContract.View {
         recoveryAllTasks()
     }
 
-    private fun setupDescriptionDataHome() {
-        val calendar = Calendar.getInstance()
-
-        val dayOfWeek = dayOfWeek(calendar)
-        val nameOfMonth = nameOfMonth(calendar)
-
-        _binding?.descriptionHome?.text = "${dayOfWeek?.capitalize()},${nameOfMonth?.capitalize()}"
-    }
-
-
-    private fun onClickBtnMoreAction() {
-        _binding?.btnMore?.setOnClickListener {
-
-            val bottomSheet = BottomSheetDialog(this)
-
-            bottomSheet.setContentView(R.layout.bottom_sheet_home)
-
-            val listTask = bottomSheet.findViewById<LinearLayout>(R.id.listtask)
-            listAllFavoriteTasks(listTask)
-
-            val listTasks = bottomSheet.findViewById<LinearLayout>(R.id.listAllTasks)
-            listAllTasks(listTasks)
-
-            bottomSheet.show()
-        }
-    }
-
     private fun onClickBtnFabAction() {
         _binding?.fab?.setOnClickListener {
-
-            val bottomSheet = BottomSheetDialog(this)
-
-            bottomSheet.setContentView(R.layout.bottom_sheet_add_task)
-
-            bottomSheet.findViewById<ImageButton>(R.id.btn_addtask)?.setOnClickListener {
-                homeViewModel.createTask(
-                    bottomSheet.findViewById<EditText>(R.id.edt_title)?.text.toString(),
-                    bottomSheet.findViewById<EditText>(R.id.edt_description)?.text.toString(),
-                    bottomSheet.findViewById<CheckBox>(R.id.checkBoxFav)?.isChecked
-                )
-            }
-
-            bottomSheet.show()
+            homeViewModel.redirectToAddTaskPage()
         }
     }
 
@@ -207,18 +206,6 @@ class HomeActivity : BaseActivity(), HomeContract.View {
 
     private fun nameOfMonth(calendar: Calendar): String? {
         return DateFormatSymbols().months[calendar[Calendar.MONTH]]
-    }
-
-    private fun listAllTasks(view: LinearLayout?) {
-        view?.setOnClickListener {
-            homeViewModel.listAllTasks()
-        }
-    }
-
-    private fun listAllFavoriteTasks(view: LinearLayout?) {
-        view?.setOnClickListener {
-            homeViewModel.listAllFavoriteTasksSelected()
-        }
     }
 
     override fun showMessage(string: String) {}
@@ -260,6 +247,13 @@ class HomeActivity : BaseActivity(), HomeContract.View {
                 showFloactingButton()
                 homeViewModel.trackCloseNavigation()
             }
+            is HomeAddTaskFragment -> {
+                showToolbar()
+                showFloactingButton()
+            }
+            is HomeTaskDetailFragment -> {
+
+            }
             else -> Unit
         }
 
@@ -268,5 +262,9 @@ class HomeActivity : BaseActivity(), HomeContract.View {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
     }
 }

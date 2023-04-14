@@ -25,7 +25,7 @@ class FirebaseRealtimeStoragePhotoImpl<T : Any>(override var referenceDatabaseNa
         return this as T
     }
 
-    override fun saveData(data: T) {
+    override fun saveData(data: T, userId: String?) {
         val id = data::class.java.getDeclaredField("id")
         id.isAccessible = true
         val idString = id.get(data)
@@ -68,6 +68,9 @@ class FirebaseRealtimeStoragePhotoImpl<T : Any>(override var referenceDatabaseNa
         }
     }
 
+    override fun saveListData(data: List<T>, userId: String?) {}
+    override fun removeData(data: T?, onSuccess: () -> Unit, onFailure: () -> Unit) {}
+
     override fun getOneData(
         onRecovery: (Map<String, Any>) -> Unit,
         onFailure: (String) -> Unit,
@@ -88,4 +91,6 @@ class FirebaseRealtimeStoragePhotoImpl<T : Any>(override var referenceDatabaseNa
         onFailure: (String) -> Unit
     ) {
     }
+
+    override fun clearAllData(onSuccess: () -> Unit, onFailure: () -> Unit) {}
 }

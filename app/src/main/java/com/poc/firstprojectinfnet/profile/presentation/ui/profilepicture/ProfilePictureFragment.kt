@@ -33,7 +33,6 @@ class ProfilePictureFragment : Fragment(), HomeOnBackPressed {
         )
     }
 
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -61,6 +60,7 @@ class ProfilePictureFragment : Fragment(), HomeOnBackPressed {
 
         hideStatusProfileSettings()
 
+        profilePictureViewModel.recoveryTasks()
         profilePictureViewModel.recoveryProfileImage()
         profilePictureViewModel.recoveryProfileSettings()
 
@@ -77,6 +77,7 @@ class ProfilePictureFragment : Fragment(), HomeOnBackPressed {
         _binding?.txtEmail?.visibility = View.GONE
         _binding?.txtName?.visibility = View.GONE
         _binding?.iconEmail?.visibility = View.GONE
+        _binding?.linearTasks?.visibility = View.GONE
     }
 
     private fun hideStatusHomeActivity() {
@@ -97,7 +98,6 @@ class ProfilePictureFragment : Fragment(), HomeOnBackPressed {
         }
     }
 
-
     private fun observeAction() {
         profilePictureViewModel.action.observe(viewLifecycleOwner) { action ->
             when (action) {
@@ -117,16 +117,23 @@ class ProfilePictureFragment : Fragment(), HomeOnBackPressed {
 
     private fun setupProfileSettings(profilePictureState: ProfilePictureState) {
         profilePictureState.apply {
-            this.profilePictureState.email?.let {
+            this.profilePictureState?.email?.let {
                 _binding?.txtEmail?.text = it
                 _binding?.txtEmail?.visibility = View.VISIBLE
                 _binding?.iconEmail?.visibility = View.VISIBLE
             }
 
-            this.profilePictureState.name.let {
+            this.profilePictureState?.name.let {
                 _binding?.txtName?.text = it
                 _binding?.txtName?.visibility = View.VISIBLE
             }
+        }
+
+        profilePictureState.tasksProfile?.let { tasksProfile ->
+            _binding?.linearTasks?.visibility = View.VISIBLE
+            _binding?.txtFavTasks?.text = tasksProfile.favoriteTasks.toString()
+            _binding?.txtFavTasks?.setTextColor(resources.getColor(R.color.red))
+            _binding?.txtAllTasks?.text = tasksProfile.allTasks.toString()
         }
     }
 

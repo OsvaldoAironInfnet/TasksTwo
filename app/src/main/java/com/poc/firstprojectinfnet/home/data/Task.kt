@@ -4,5 +4,9 @@ data class Task(
     val title: String = "",
     val description: String = "",
     val id: String = "",
-    val isFavorite: Boolean = false
-)
+    val favorite: Boolean,
+    val date: String = "",
+    val hour: String = "",
+    val crit: String = "",
+    val validationId: String = ""
+) : java.io.Serializable

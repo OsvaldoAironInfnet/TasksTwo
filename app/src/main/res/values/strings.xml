@@ -13,6 +13,8 @@
     <string name="username">Email</string>
     <string name="title">Titulo</string>
     <string name="description">Descrição</string>
+    <string name="date_txt">Data de expiração Ex: (11/04/2023)</string>
+    <string name="hour_txt">Hora de expiração</string>
     <string name="ou_acesse_com_o_google_login">Ou</string>
     <string name="n_o_tem_conta_cadastre_se_aqui">Não tem conta? <b><i>cadastre-se aqui</i></b></string>
     <string name="not_warning_forgot_password">Não se preocupe, iremos enviar um e-mail de confirmação.</string>
@@ -21,6 +23,7 @@
     <string name="forgot_password_btn">Redefinir Senha</string>
     <string name="btn_update_profile">Atualizar Perfil</string>
     <string name="btn_salve_profile">Salvar Perfil</string>
+    <string name="btn_save_task">Salvar Tarefa</string>
     <string name="register">SingUp</string>
     <string name="entrar_com_google">Entrar com google</string>
     <string name="entrar_com_o_google">Entrar com o Google</string>
@@ -38,10 +41,14 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="txt_label_task">Tarefa</string>
 
     <string name="menu_home">Perfil</string>
     <string name="menu_fav_tasks">Listar Favoritos</string>
-    <string name="menu_slideshow">Sair</string>
+    <string name="menu_add_tasks">Adicionar Tarefas</string>
+    <string name="menu_detail_task">Detalhe Tarefa</string>
     <string name="tarefas_favoritas">Tarefas Favoritas</string>
     <string name="tarefas">Tarefas</string>
+    <string name="desire_task">Deseja favoritar esta tarefa?</string>
+    <string name="crit">Criticidade</string>
 </resources>
