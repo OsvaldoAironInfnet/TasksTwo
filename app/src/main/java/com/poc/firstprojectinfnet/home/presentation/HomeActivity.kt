@@ -3,6 +3,7 @@ package com.poc.firstprojectinfnet.home.presentation
 
 import android.app.AlertDialog
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.transition.Fade
 import android.transition.Slide
@@ -29,6 +30,7 @@ import com.google.android.material.navigation.NavigationView
 import com.poc.commom.base.views.BaseActivity
 import com.poc.firstprojectinfnet.R
 import com.poc.firstprojectinfnet.databinding.ActivityHomeBinding
+import com.poc.firstprojectinfnet.home.data.receiver.NotificationTaskReceiver
 import com.poc.firstprojectinfnet.home.navigation.RedirectHomeFlowEnum
 import com.poc.firstprojectinfnet.home.presentation.weather.WeatherFragment
 import com.poc.firstprojectinfnet.login.navigation.RedirectLoginFlowEnum
@@ -53,6 +55,9 @@ class HomeActivity : BaseActivity(), HomeContract.View {
         super.onCreate(savedInstanceState)
         _binding = ActivityHomeBinding.inflate(layoutInflater)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationTaskReceiver.setAndCreateNotificationChannel(this)
+        }
         setNavigationRoot(R.id.nav_host_fragment_main)
         supportActionBar?.hide()
         setContentView(_binding?.root)
