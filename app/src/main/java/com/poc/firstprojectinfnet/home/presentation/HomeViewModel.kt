@@ -178,7 +178,12 @@ class HomeViewModel(
             validationId = UUID.randomUUID().toString()
         )
         homeSaveTaskUseCase.saveRemoteTask(task)
-        action.value = HomeAction.RedirectToHome.apply { message = "Tarefa criada com sucesso!" }
+        val calendarScheduleTask1 = createScheduleNotification(task)
+        action.value = HomeAction.RedirectToHomeWithArgs.apply {
+            message = "Tarefa criada com sucesso!"
+            calendarScheduleTask = calendarScheduleTask1
+            this.titleTask = task.title
+        }
     }
 
     fun listAllFavoriteTasksSelected() {
@@ -236,6 +241,19 @@ class HomeViewModel(
                 message = "Não foi possivel obter as tarefas!"
             }
         })
+    }
+
+    private fun createScheduleNotification(task: Task): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar.set(
+            task.date.substring(6, 10).toInt(),
+            task.date.substring(3, 5).toInt() - 1,
+            task.date.substring(0, 2).toInt(),
+            task.hour.substring(0, 2).toInt(),
+            task.hour.substring(3, 5).toInt(),
+            0
+        )
+        return calendar
     }
 
     fun onLogoutApp() {
